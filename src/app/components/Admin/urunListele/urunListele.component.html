@@ -1,0 +1,69 @@
+<div class="container">
+  <h1>Ürünler</h1>
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="Aranacak Bir Değer Giriniz">
+  </mat-form-field>
+  <button mat-fab color="primary" matTooltip="Ürün Ekle">
+    <mat-icon aria-label="label">person_add</mat-icon>
+  </button>
+  <p>&nbsp;</p>
+
+
+
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <ng-container matColumnDef="ogrFoto">
+      <mat-header-cell *matHeaderCellDef> Fotoğraf
+      </mat-header-cell>
+      <mat-cell *matCellDef="let UrunBilgisi">
+        <img [src]="servis.siteurl+'/Dosyalar/'+UrunBilgisi.ogrFoto" style="width: 100px;"
+          matTooltip="Fotoğrafı Güncellemek İçin Tıklayınız..." />
+
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="urunFoto">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Ürün Fotoğrafı
+      </mat-header-cell>
+      <mat-cell *matCellDef="let UrunBilgisi"> {{UrunBilgisi.urunfoto}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="UrunId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> urun Id
+      </mat-header-cell>
+      <mat-cell *matCellDef="let UrunBilgisi"> {{UrunBilgisi.urun_Id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="urun_Adi">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Ürün Adı
+      </mat-header-cell>
+      <mat-cell *matCellDef="let UrunBilgisi"> {{UrunBilgisi.urun_Adi}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="urun_Satis_Fiyat">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Ürün Satış Fiyatı
+      </mat-header-cell>
+      <mat-cell *matCellDef="let UrunBilgisi"> {{UrunBilgisi.urun_Satis_Fiyat}} </mat-cell>
+    </ng-container>
+
+
+
+
+    <ng-container matColumnDef="islemler">
+      <mat-header-cell *matHeaderCellDef> İşlemler
+      </mat-header-cell>
+      <mat-cell *matCellDef="let UrunBilgisi">
+
+        <button mat-icon-button matTooltip="Ürünleri Listele">
+          <mat-icon aria-label="label" color="primary">article</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Ürün Düzenle">
+          <mat-icon aria-label="label" color="primary">edit</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Ürün Sil">
+          <mat-icon aria-label="label" color="warn">delete</mat-icon>
+        </button>
+
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+  </mat-paginator>
+</div>

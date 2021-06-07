@@ -1,0 +1,50 @@
+<mat-card class="mat-elevation-z5">
+  <div class="container">
+    <mat-form-field appearance="fill">
+      <mat-label>Ürünün Adı</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ürünün Kategorisi</mat-label>
+      <mat-select>
+        <mat-option value="two" *ngFor="let Kategori of kategori">{{Kategori.kategori_Adi}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ürünün Markası</mat-label>
+      <mat-select>
+        <mat-option value="two" *ngFor="let Marka of marka">{{Marka.marka_Adi}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ürünün Stok Bilgisi</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ürünün Geliş Fiyatı</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ürünün Satış Fiyatı</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ürünün KDV</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ürünün Açıklaması</mat-label>
+      <textarea matInput></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="Kaydet()">Kaydet</button>
+
+  </div>
+</mat-card>
