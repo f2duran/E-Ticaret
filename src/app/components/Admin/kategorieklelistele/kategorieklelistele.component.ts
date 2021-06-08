@@ -42,10 +42,8 @@ export class KategorieklelisteleComponent implements OnInit {
     } else {
       alert("Bi zeki sensin")
       location.href = ("/");
-    }
-
-  }
-
+    };
+  };
   Ekle() {
     var yeniKayit: KategoriBilgisi = new KategoriBilgisi();
     this.dialogRef = this.matdialog.open(KategoriDialogComponent, {
@@ -82,7 +80,6 @@ export class KategorieklelisteleComponent implements OnInit {
       }
     });
   }
-
   Sil(kayit: KategoriBilgisi) {
     this.dialogRefConfirm = this.matdialog.open(ConfirmDialogComponent, {
       width: '400px'

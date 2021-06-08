@@ -5,8 +5,6 @@
   </mat-form-field>
   <p>&nbsp;</p>
 
-
-
   <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
     <ng-container matColumnDef="urunfoto">
       <mat-header-cell *matHeaderCellDef> Fotoğraf
@@ -14,10 +12,8 @@
       <mat-cell *matCellDef="let UrunBilgisi">
         <img [src]="servis.siteurl+'/Dosyalar/'+UrunBilgisi.ogrFoto" style="width: 100px;"
           matTooltip="Fotoğrafı Güncellemek İçin Tıklayınız..." />
-
       </mat-cell>
     </ng-container>
-
     <ng-container matColumnDef="satis_Urun_Id">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Kategori Id
       </mat-header-cell>
@@ -29,15 +25,10 @@
       <mat-cell *matCellDef="let SatisBilgisi"> {{SatisBilgisi.satis_Top_Fiyat}} </mat-cell>
     </ng-container>
 
-
-
-
-
     <ng-container matColumnDef="islemler">
       <mat-header-cell *matHeaderCellDef> İşlemler
       </mat-header-cell>
       <mat-cell *matCellDef="let KategoriBilgisi">
-
         <button mat-icon-button matTooltip="Detaya Git">
           <mat-icon aria-label="label" color="primary">search</mat-icon>
         </button>

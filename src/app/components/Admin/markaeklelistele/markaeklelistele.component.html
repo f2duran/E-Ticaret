@@ -8,8 +8,6 @@
   </button>
   <p>&nbsp;</p>
 
-
-
   <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
     <ng-container matColumnDef="marka_Id">
@@ -23,24 +21,19 @@
       <mat-cell *matCellDef="let kayit"> {{kayit.marka_Adi}} </mat-cell>
     </ng-container>
 
-
-
-
-
     <ng-container matColumnDef="islemler">
       <mat-header-cell *matHeaderCellDef> İşlemler
       </mat-header-cell>
       <mat-cell *matCellDef="let kayit">
-
         <button mat-icon-button matTooltip="Ürün Düzenle" (click)="Duzenle(kayit)">
           <mat-icon aria-label="label" color="primary">edit</mat-icon>
         </button>
         <button mat-icon-button matTooltip="Ürün Sil" (click)="Sil(kayit)">
           <mat-icon aria-label="label" color="warn">delete</mat-icon>
         </button>
-
       </mat-cell>
     </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
