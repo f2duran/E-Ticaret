@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities1">
+    <EntitySetMapping Name="Favori_Bilgisi">
+      <EntityTypeMapping TypeName="Model.Favori_Bilgisi">
+        <MappingFragment StoreEntitySet="Favori-Bilgisi">
+          <ScalarProperty Name="favori_Id" ColumnName="favori-Id" />
+          <ScalarProperty Name="favori_Urun_ıd" ColumnName="favori-Urun_ıd" />
+          <ScalarProperty Name="favori_Uye_Id" ColumnName="favori-Uye-Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kategori_Bilgisi">
+      <EntityTypeMapping TypeName="Model.Kategori_Bilgisi">
+        <MappingFragment StoreEntitySet="Kategori-Bilgisi">
+          <ScalarProperty Name="kategori_Id" ColumnName="kategori-Id" />
+          <ScalarProperty Name="kategori_Adi" ColumnName="kategori-Adi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Marka_Bilgi">
+      <EntityTypeMapping TypeName="Model.Marka_Bilgi">
+        <MappingFragment StoreEntitySet="Marka-Bilgi">
+          <ScalarProperty Name="marka_Id" ColumnName="marka-Id" />
+          <ScalarProperty Name="marka_Adi" ColumnName="marka-Adi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sepet_Bilgisi">
+      <EntityTypeMapping TypeName="Model.Sepet_Bilgisi">
+        <MappingFragment StoreEntitySet="Sepet-Bilgisi">
+          <ScalarProperty Name="sepet_Id" ColumnName="sepet-Id" />
+          <ScalarProperty Name="sepet_Uye_Id" ColumnName="sepet-Uye-Id" />
+          <ScalarProperty Name="sepet_Urun_Id" ColumnName="sepet-Urun-Id" />
+          <ScalarProperty Name="sepet_Urun_Fiyat" ColumnName="sepet-Urun-Fiyat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="Model.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Urun_Bilgisi">
+      <EntityTypeMapping TypeName="Model.Urun_Bilgisi">
+        <MappingFragment StoreEntitySet="Urun-Bilgisi">
+          <ScalarProperty Name="urun_Id" ColumnName="urun-Id" />
+          <ScalarProperty Name="urun_Marka_Id" ColumnName="urun-Marka-Id" />
+          <ScalarProperty Name="urun_Kategori_Id" ColumnName="urun-Kategori-Id" />
+          <ScalarProperty Name="urun_Adi" ColumnName="urun-Adi" />
+          <ScalarProperty Name="urun_Gelis_Fiyat" ColumnName="urun-Gelis-Fiyat" />
+          <ScalarProperty Name="urun_Satis_Fiyat" ColumnName="urun-Satis-Fiyat" />
+          <ScalarProperty Name="urun_Stok" ColumnName="urun-Stok" />
+          <ScalarProperty Name="urun_Eklenme_Tarih" ColumnName="urun-Eklenme-Tarih" />
+          <ScalarProperty Name="urun_KDV" ColumnName="urun-KDV" />
+          <ScalarProperty Name="urun_Satılan" ColumnName="urun-Satılan" />
+          <ScalarProperty Name="urun_İmage" ColumnName="urun-İmage" />
+          <ScalarProperty Name="urun_Admin_Bilgi" ColumnName="urun-Admin-Bilgi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Uye_Bilgi">
+      <EntityTypeMapping TypeName="Model.Uye_Bilgi">
+        <MappingFragment StoreEntitySet="Uye-Bilgi">
+          <ScalarProperty Name="uye_Id" ColumnName="uye-Id" />
+          <ScalarProperty Name="uye_Ad_Soyad" ColumnName="uye-Ad-Soyad" />
+          <ScalarProperty Name="uye_E_Mail" ColumnName="uye-E-Mail" />
+          <ScalarProperty Name="uye_Sifre" ColumnName="uye-Sifre" />
+          <ScalarProperty Name="uye_Adres_Bilgisi" ColumnName="uye-Adres-Bilgisi" />
+          <ScalarProperty Name="uye_Admin_Bilgisi" ColumnName="uye-Admin-Bilgisi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Satis_Bilgisi">
+      <EntityTypeMapping TypeName="Model.Satis_Bilgisi">
+        <MappingFragment StoreEntitySet="Satis-Bilgisi">
+          <ScalarProperty Name="satis_Id" ColumnName="satis-Id" />
+          <ScalarProperty Name="satis_Uye_Id" ColumnName="satis-Uye-Id" />
+          <ScalarProperty Name="satis_Urun_Id" ColumnName="satis-Urun-Id" />
+          <ScalarProperty Name="satis_Top_Fiyat" ColumnName="satis-Top-Fiyat" />
+          <ScalarProperty Name="satis_Urun_Fiyat" ColumnName="satis-Urun-Fiyat" />
+          <ScalarProperty Name="satis_Urun_KDV" ColumnName="satis-Urun-KDV" />
+          <ScalarProperty Name="satis_Urun_Kargo_Fiyat" ColumnName="satis-Urun-Kargo-Fiyat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

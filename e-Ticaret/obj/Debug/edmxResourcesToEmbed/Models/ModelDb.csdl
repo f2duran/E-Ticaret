@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Favori_Bilgisi">
+    <Key>
+      <PropertyRef Name="favori_Id" />
+    </Key>
+    <Property Name="favori_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="favori_Urun_ıd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="favori_Uye_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Urun_Bilgisi" Relationship="Self.FK_Favori_Bilgisi_Urun_Bilgisi" FromRole="Favori_Bilgisi" ToRole="Urun_Bilgisi" />
+    <NavigationProperty Name="Uye_Bilgi" Relationship="Self.FK_Favori_Bilgisi_Uye_Bilgi1" FromRole="Favori_Bilgisi" ToRole="Uye_Bilgi" />
+  </EntityType>
+  <EntityType Name="Kategori_Bilgisi">
+    <Key>
+      <PropertyRef Name="kategori_Id" />
+    </Key>
+    <Property Name="kategori_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="kategori_Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Urun_Bilgisi" Relationship="Self.FK_Urun_Bilgisi_Kategori_Bilgisi1" FromRole="Kategori_Bilgisi" ToRole="Urun_Bilgisi" />
+  </EntityType>
+  <EntityType Name="Marka_Bilgi">
+    <Key>
+      <PropertyRef Name="marka_Id" />
+    </Key>
+    <Property Name="marka_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="marka_Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Urun_Bilgisi" Relationship="Self.FK_Urun_Bilgisi_Marka_Bilgi1" FromRole="Marka_Bilgi" ToRole="Urun_Bilgisi" />
+  </EntityType>
+  <EntityType Name="Sepet_Bilgisi">
+    <Key>
+      <PropertyRef Name="sepet_Id" />
+    </Key>
+    <Property Name="sepet_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="sepet_Uye_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="sepet_Urun_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="sepet_Urun_Fiyat" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Urun_Bilgisi" Relationship="Self.FK_Sepet_Bilgisi_Urun_Bilgisi" FromRole="Sepet_Bilgisi" ToRole="Urun_Bilgisi" />
+    <NavigationProperty Name="Uye_Bilgi" Relationship="Self.FK_Sepet_Bilgisi_Uye_Bilgi" FromRole="Sepet_Bilgisi" ToRole="Uye_Bilgi" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Urun_Bilgisi">
+    <Key>
+      <PropertyRef Name="urun_Id" />
+    </Key>
+    <Property Name="urun_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="urun_Marka_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="urun_Kategori_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="urun_Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="urun_Gelis_Fiyat" Type="Int32" Nullable="false" />
+    <Property Name="urun_Satis_Fiyat" Type="Int32" Nullable="false" />
+    <Property Name="urun_Stok" Type="Int32" Nullable="false" />
+    <Property Name="urun_Eklenme_Tarih" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="urun_KDV" Type="Int32" Nullable="false" />
+    <Property Name="urun_Satılan" Type="Int32" />
+    <Property Name="urun_İmage" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="urun_Admin_Bilgi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Favori_Bilgisi" Relationship="Self.FK_Favori_Bilgisi_Urun_Bilgisi" FromRole="Urun_Bilgisi" ToRole="Favori_Bilgisi" />
+    <NavigationProperty Name="Kategori_Bilgisi" Relationship="Self.FK_Urun_Bilgisi_Kategori_Bilgisi1" FromRole="Urun_Bilgisi" ToRole="Kategori_Bilgisi" />
+    <NavigationProperty Name="Marka_Bilgi" Relationship="Self.FK_Urun_Bilgisi_Marka_Bilgi1" FromRole="Urun_Bilgisi" ToRole="Marka_Bilgi" />
+    <NavigationProperty Name="Sepet_Bilgisi" Relationship="Self.FK_Sepet_Bilgisi_Urun_Bilgisi" FromRole="Urun_Bilgisi" ToRole="Sepet_Bilgisi" />
+    <NavigationProperty Name="Satis_Bilgisi" Relationship="Self.FK_Satis_Bilgisi_Urun_Bilgisi" FromRole="Urun_Bilgisi" ToRole="Satis_Bilgisi" />
+    <NavigationProperty Name="Uye_Bilgi" Relationship="Self.FK_Urun_Bilgisi_Uye_Bilgi" FromRole="Urun_Bilgisi" ToRole="Uye_Bilgi" />
+  </EntityType>
+  <EntityType Name="Uye_Bilgi">
+    <Key>
+      <PropertyRef Name="uye_Id" />
+    </Key>
+    <Property Name="uye_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="uye_Ad_Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="uye_E_Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="uye_Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="uye_Adres_Bilgisi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="uye_Admin_Bilgisi" Type="Boolean" />
+    <NavigationProperty Name="Favori_Bilgisi" Relationship="Self.FK_Favori_Bilgisi_Uye_Bilgi1" FromRole="Uye_Bilgi" ToRole="Favori_Bilgisi" />
+    <NavigationProperty Name="Sepet_Bilgisi" Relationship="Self.FK_Sepet_Bilgisi_Uye_Bilgi" FromRole="Uye_Bilgi" ToRole="Sepet_Bilgisi" />
+    <NavigationProperty Name="Urun_Bilgisi" Relationship="Self.FK_Urun_Bilgisi_Uye_Bilgi" FromRole="Uye_Bilgi" ToRole="Urun_Bilgisi" />
+    <NavigationProperty Name="Satis_Bilgisi" Relationship="Self.FK_Satis_Bilgisi_Uye_Bilgi" FromRole="Uye_Bilgi" ToRole="Satis_Bilgisi" />
+  </EntityType>
+  <EntityType Name="Satis_Bilgisi">
+    <Key>
+      <PropertyRef Name="satis_Id" />
+      <PropertyRef Name="satis_Uye_Id" />
+      <PropertyRef Name="satis_Urun_Id" />
+      <PropertyRef Name="satis_Top_Fiyat" />
+      <PropertyRef Name="satis_Urun_Fiyat" />
+      <PropertyRef Name="satis_Urun_KDV" />
+      <PropertyRef Name="satis_Urun_Kargo_Fiyat" />
+    </Key>
+    <Property Name="satis_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="satis_Uye_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="satis_Urun_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="satis_Top_Fiyat" Type="Int32" Nullable="false" />
+    <Property Name="satis_Urun_Fiyat" Type="Int32" Nullable="false" />
+    <Property Name="satis_Urun_KDV" Type="Int32" Nullable="false" />
+    <Property Name="satis_Urun_Kargo_Fiyat" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Urun_Bilgisi" Relationship="Self.FK_Satis_Bilgisi_Urun_Bilgisi" FromRole="Satis_Bilgisi" ToRole="Urun_Bilgisi" />
+    <NavigationProperty Name="Uye_Bilgi" Relationship="Self.FK_Satis_Bilgisi_Uye_Bilgi" FromRole="Satis_Bilgisi" ToRole="Uye_Bilgi" />
+  </EntityType>
+  <Association Name="FK_Favori_Bilgisi_Urun_Bilgisi">
+    <End Role="Urun_Bilgisi" Type="Self.Urun_Bilgisi" Multiplicity="1" />
+    <End Role="Favori_Bilgisi" Type="Self.Favori_Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urun_Bilgisi">
+        <PropertyRef Name="urun_Id" />
+      </Principal>
+      <Dependent Role="Favori_Bilgisi">
+        <PropertyRef Name="favori_Urun_ıd" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Favori_Bilgisi_Uye_Bilgi1">
+    <End Role="Uye_Bilgi" Type="Self.Uye_Bilgi" Multiplicity="1" />
+    <End Role="Favori_Bilgisi" Type="Self.Favori_Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uye_Bilgi">
+        <PropertyRef Name="uye_Id" />
+      </Principal>
+      <Dependent Role="Favori_Bilgisi">
+        <PropertyRef Name="favori_Uye_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Urun_Bilgisi_Kategori_Bilgisi1">
+    <End Role="Kategori_Bilgisi" Type="Self.Kategori_Bilgisi" Multiplicity="1" />
+    <End Role="Urun_Bilgisi" Type="Self.Urun_Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategori_Bilgisi">
+        <PropertyRef Name="kategori_Id" />
+      </Principal>
+      <Dependent Role="Urun_Bilgisi">
+        <PropertyRef Name="urun_Kategori_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Urun_Bilgisi_Marka_Bilgi1">
+    <End Role="Marka_Bilgi" Type="Self.Marka_Bilgi" Multiplicity="1" />
+    <End Role="Urun_Bilgisi" Type="Self.Urun_Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Marka_Bilgi">
+        <PropertyRef Name="marka_Id" />
+      </Principal>
+      <Dependent Role="Urun_Bilgisi">
+        <PropertyRef Name="urun_Marka_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sepet_Bilgisi_Urun_Bilgisi">
+    <End Role="Urun_Bilgisi" Type="Self.Urun_Bilgisi" Multiplicity="1" />
+    <End Role="Sepet_Bilgisi" Type="Self.Sepet_Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urun_Bilgisi">
+        <PropertyRef Name="urun_Id" />
+      </Principal>
+      <Dependent Role="Sepet_Bilgisi">
+        <PropertyRef Name="sepet_Urun_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sepet_Bilgisi_Uye_Bilgi">
+    <End Role="Uye_Bilgi" Type="Self.Uye_Bilgi" Multiplicity="1" />
+    <End Role="Sepet_Bilgisi" Type="Self.Sepet_Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uye_Bilgi">
+        <PropertyRef Name="uye_Id" />
+      </Principal>
+      <Dependent Role="Sepet_Bilgisi">
+        <PropertyRef Name="sepet_Uye_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Satis_Bilgisi_Urun_Bilgisi">
+    <End Role="Urun_Bilgisi" Type="Self.Urun_Bilgisi" Multiplicity="1" />
+    <End Role="Satis_Bilgisi" Type="Self.Satis_Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urun_Bilgisi">
+        <PropertyRef Name="urun_Id" />
+      </Principal>
+      <Dependent Role="Satis_Bilgisi">
+        <PropertyRef Name="satis_Urun_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Urun_Bilgisi_Uye_Bilgi">
+    <End Role="Uye_Bilgi" Type="Self.Uye_Bilgi" Multiplicity="1" />
+    <End Role="Urun_Bilgisi" Type="Self.Urun_Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uye_Bilgi">
+        <PropertyRef Name="uye_Id" />
+      </Principal>
+      <Dependent Role="Urun_Bilgisi">
+        <PropertyRef Name="urun_Admin_Bilgi" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Satis_Bilgisi_Uye_Bilgi">
+    <End Role="Uye_Bilgi" Type="Self.Uye_Bilgi" Multiplicity="1" />
+    <End Role="Satis_Bilgisi" Type="Self.Satis_Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uye_Bilgi">
+        <PropertyRef Name="uye_Id" />
+      </Principal>
+      <Dependent Role="Satis_Bilgisi">
+        <PropertyRef Name="satis_Uye_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Favori_Bilgisi" EntityType="Self.Favori_Bilgisi" />
+    <EntitySet Name="Kategori_Bilgisi" EntityType="Self.Kategori_Bilgisi" />
+    <EntitySet Name="Marka_Bilgi" EntityType="Self.Marka_Bilgi" />
+    <EntitySet Name="Sepet_Bilgisi" EntityType="Self.Sepet_Bilgisi" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Urun_Bilgisi" EntityType="Self.Urun_Bilgisi" />
+    <EntitySet Name="Uye_Bilgi" EntityType="Self.Uye_Bilgi" />
+    <EntitySet Name="Satis_Bilgisi" EntityType="Self.Satis_Bilgisi" />
+    <AssociationSet Name="FK_Favori_Bilgisi_Urun_Bilgisi" Association="Self.FK_Favori_Bilgisi_Urun_Bilgisi">
+      <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
+      <End Role="Favori_Bilgisi" EntitySet="Favori_Bilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Favori_Bilgisi_Uye_Bilgi1" Association="Self.FK_Favori_Bilgisi_Uye_Bilgi1">
+      <End Role="Uye_Bilgi" EntitySet="Uye_Bilgi" />
+      <End Role="Favori_Bilgisi" EntitySet="Favori_Bilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Urun_Bilgisi_Kategori_Bilgisi1" Association="Self.FK_Urun_Bilgisi_Kategori_Bilgisi1">
+      <End Role="Kategori_Bilgisi" EntitySet="Kategori_Bilgisi" />
+      <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Urun_Bilgisi_Marka_Bilgi1" Association="Self.FK_Urun_Bilgisi_Marka_Bilgi1">
+      <End Role="Marka_Bilgi" EntitySet="Marka_Bilgi" />
+      <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sepet_Bilgisi_Urun_Bilgisi" Association="Self.FK_Sepet_Bilgisi_Urun_Bilgisi">
+      <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
+      <End Role="Sepet_Bilgisi" EntitySet="Sepet_Bilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sepet_Bilgisi_Uye_Bilgi" Association="Self.FK_Sepet_Bilgisi_Uye_Bilgi">
+      <End Role="Uye_Bilgi" EntitySet="Uye_Bilgi" />
+      <End Role="Sepet_Bilgisi" EntitySet="Sepet_Bilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Satis_Bilgisi_Urun_Bilgisi" Association="Self.FK_Satis_Bilgisi_Urun_Bilgisi">
+      <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
+      <End Role="Satis_Bilgisi" EntitySet="Satis_Bilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Urun_Bilgisi_Uye_Bilgi" Association="Self.FK_Urun_Bilgisi_Uye_Bilgi">
+      <End Role="Uye_Bilgi" EntitySet="Uye_Bilgi" />
+      <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Satis_Bilgisi_Uye_Bilgi" Association="Self.FK_Satis_Bilgisi_Uye_Bilgi">
+      <End Role="Uye_Bilgi" EntitySet="Uye_Bilgi" />
+      <End Role="Satis_Bilgisi" EntitySet="Satis_Bilgisi" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
