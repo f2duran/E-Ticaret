@@ -9,6 +9,7 @@ namespace e_Ticaret.viewModel
     {
         public string kategori_Id { get; set; }
         public string kategori_Adi { get; set; }
-
+       
+        public urunBilgisiModel urunbilgi { get; set; }
     }
 }

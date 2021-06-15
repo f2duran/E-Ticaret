@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="147e3f87f4d745e1b1e166864aba9172" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="Model.Favori_Bilgisi" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Foto_Bilgisi" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Kategori_Bilgisi" Width="1.5" PointX="3.75" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Marka_Bilgi" Width="1.5" PointX="3.75" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Sepet_Bilgisi" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Urun_Bilgisi" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Uye_Bilgi" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Satis_Bilgisi" Width="1.5" PointX="8.25" PointY="5.5" IsExpanded="true" />
+      <Diagram DiagramId="ea9c2043d35b4336b1d4bae81baee176" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Favori_Bilgisi" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Kategori_Bilgisi" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Marka_Bilgi" Width="1.5" PointX="3.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Sepet_Bilgisi" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="5.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Urun_Bilgisi" Width="1.5" PointX="6" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.urun_Foto_Bilgisi" Width="1.5" PointX="3.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Uye_Bilgi" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Satis_Bilgisi" Width="1.5" PointX="8.25" PointY="6.625" IsExpanded="true" />
         <AssociationConnector Association="Model.FK_Favori_Bilgisi_Urun_Bilgisi" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Favori_Bilgisi_Uye_Bilgi1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Urun_Bilgisi_Kategori_Bilgisi1" ManuallyRouted="false" />
@@ -21,6 +21,7 @@
         <AssociationConnector Association="Model.FK_Sepet_Bilgisi_Urun_Bilgisi" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Sepet_Bilgisi_Uye_Bilgi" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Satis_Bilgisi_Urun_Bilgisi" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Urun_Bilgisi_urun_Foto_Bilgisi" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Urun_Bilgisi_Uye_Bilgi" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Satis_Bilgisi_Uye_Bilgi" ManuallyRouted="false" />
       </Diagram>

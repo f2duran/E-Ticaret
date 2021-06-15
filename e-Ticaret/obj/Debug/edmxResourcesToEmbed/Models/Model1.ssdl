@@ -8,14 +8,6 @@
     <Property Name="favori-Urun_ıd" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="favori-Uye-Id" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <EntityType Name="Foto-Bilgisi">
-    <Key>
-      <PropertyRef Name="foto-Id" />
-    </Key>
-    <Property Name="foto-Id" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="foto" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="foto-Urun-Id" Type="nvarchar" MaxLength="50" Nullable="false" />
-  </EntityType>
   <EntityType Name="Kategori-Bilgisi">
     <Key>
       <PropertyRef Name="kategori-Id" />
@@ -83,12 +75,21 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
     <Property Name="urun-Eklenme-Tarih" Type="datetime" Nullable="false" />
     <Property Name="urun-KDV" Type="int" Nullable="false" />
     <Property Name="urun-Satılan" Type="int" />
-    <Property Name="urun-İmage" Type="image" />
     <Property Name="urun-Admin-Bilgi" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="urun-Aciklama" Type="nvarchar(max)" />
-    <Property Name="urun-Foto" Type="nvarchar" MaxLength="50" />
-    <Property Name="urun-Foto-1" Type="nvarchar" MaxLength="50" />
+    <Property Name="urun-Tanitim" Type="nvarchar" MaxLength="50" />
+    <Property Name="urun-Foto-Bilgisi" Type="nvarchar" MaxLength="50" />
+    <Property Name="urun-Foto1" Type="nvarchar" MaxLength="50" />
     <Property Name="urun-Foto-2" Type="nvarchar" MaxLength="50" />
+    <Property Name="urun-foto-3" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="urun-Foto-Bilgisi">
+    <Key>
+      <PropertyRef Name="urun-Foto-Urun-Id" />
+    </Key>
+    <Property Name="urun-Foto-Urun-Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="urun-Foto-data" Type="nvarchar" MaxLength="50" />
+    <Property Name="urun-Foto-Uzanti" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Uye-Bilgi">
     <Key>
@@ -197,6 +198,18 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Urun-Bilgisi_urun-Foto-Bilgisi">
+    <End Role="urun-Foto-Bilgisi" Type="Self.urun-Foto-Bilgisi" Multiplicity="0..1" />
+    <End Role="Urun-Bilgisi" Type="Self.Urun-Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="urun-Foto-Bilgisi">
+        <PropertyRef Name="urun-Foto-Urun-Id" />
+      </Principal>
+      <Dependent Role="Urun-Bilgisi">
+        <PropertyRef Name="urun-Foto-Bilgisi" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Urun-Bilgisi_Uye-Bilgi">
     <End Role="Uye-Bilgi" Type="Self.Uye-Bilgi" Multiplicity="1" />
     <End Role="Urun-Bilgisi" Type="Self.Urun-Bilgisi" Multiplicity="*" />
@@ -211,12 +224,12 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
   </Association>
   <EntityContainer Name="ModelStoreContainer">
     <EntitySet Name="Favori-Bilgisi" EntityType="Self.Favori-Bilgisi" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Foto-Bilgisi" EntityType="Self.Foto-Bilgisi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Kategori-Bilgisi" EntityType="Self.Kategori-Bilgisi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Marka-Bilgi" EntityType="Self.Marka-Bilgi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sepet-Bilgisi" EntityType="Self.Sepet-Bilgisi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Urun-Bilgisi" EntityType="Self.Urun-Bilgisi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="urun-Foto-Bilgisi" EntityType="Self.urun-Foto-Bilgisi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Uye-Bilgi" EntityType="Self.Uye-Bilgi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Satis-Bilgisi" EntityType="Self.Satis-Bilgisi" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -259,6 +272,10 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
     </AssociationSet>
     <AssociationSet Name="FK_Urun-Bilgisi_Marka-Bilgi1" Association="Self.FK_Urun-Bilgisi_Marka-Bilgi1">
       <End Role="Marka-Bilgi" EntitySet="Marka-Bilgi" />
+      <End Role="Urun-Bilgisi" EntitySet="Urun-Bilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Urun-Bilgisi_urun-Foto-Bilgisi" Association="Self.FK_Urun-Bilgisi_urun-Foto-Bilgisi">
+      <End Role="urun-Foto-Bilgisi" EntitySet="urun-Foto-Bilgisi" />
       <End Role="Urun-Bilgisi" EntitySet="Urun-Bilgisi" />
     </AssociationSet>
     <AssociationSet Name="FK_Urun-Bilgisi_Uye-Bilgi" Association="Self.FK_Urun-Bilgisi_Uye-Bilgi">

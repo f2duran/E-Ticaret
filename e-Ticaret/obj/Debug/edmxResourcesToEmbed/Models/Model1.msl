@@ -1,21 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities2">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities4">
     <EntitySetMapping Name="Favori_Bilgisi">
       <EntityTypeMapping TypeName="Model.Favori_Bilgisi">
         <MappingFragment StoreEntitySet="Favori-Bilgisi">
           <ScalarProperty Name="favori_Id" ColumnName="favori-Id" />
           <ScalarProperty Name="favori_Urun_ıd" ColumnName="favori-Urun_ıd" />
           <ScalarProperty Name="favori_Uye_Id" ColumnName="favori-Uye-Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Foto_Bilgisi">
-      <EntityTypeMapping TypeName="Model.Foto_Bilgisi">
-        <MappingFragment StoreEntitySet="Foto-Bilgisi">
-          <ScalarProperty Name="foto_Id" ColumnName="foto-Id" />
-          <ScalarProperty Name="foto" ColumnName="foto" />
-          <ScalarProperty Name="foto_Urun_Id" ColumnName="foto-Urun-Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -69,12 +60,22 @@
           <ScalarProperty Name="urun_Eklenme_Tarih" ColumnName="urun-Eklenme-Tarih" />
           <ScalarProperty Name="urun_KDV" ColumnName="urun-KDV" />
           <ScalarProperty Name="urun_Satılan" ColumnName="urun-Satılan" />
-          <ScalarProperty Name="urun_İmage" ColumnName="urun-İmage" />
           <ScalarProperty Name="urun_Admin_Bilgi" ColumnName="urun-Admin-Bilgi" />
           <ScalarProperty Name="urun_Aciklama" ColumnName="urun-Aciklama" />
-          <ScalarProperty Name="urun_Foto" ColumnName="urun-Foto" />
-          <ScalarProperty Name="urun_Foto_1" ColumnName="urun-Foto-1" />
+          <ScalarProperty Name="urun_Tanitim" ColumnName="urun-Tanitim" />
+          <ScalarProperty Name="urun_Foto_Bilgisi" ColumnName="urun-Foto-Bilgisi" />
+          <ScalarProperty Name="urun_Foto1" ColumnName="urun-Foto1" />
           <ScalarProperty Name="urun_Foto_2" ColumnName="urun-Foto-2" />
+          <ScalarProperty Name="urun_foto_3" ColumnName="urun-foto-3" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="urun_Foto_Bilgisi">
+      <EntityTypeMapping TypeName="Model.urun_Foto_Bilgisi">
+        <MappingFragment StoreEntitySet="urun-Foto-Bilgisi">
+          <ScalarProperty Name="urun_Foto_Urun_Id" ColumnName="urun-Foto-Urun-Id" />
+          <ScalarProperty Name="urun_Foto_data" ColumnName="urun-Foto-data" />
+          <ScalarProperty Name="urun_Foto_Uzanti" ColumnName="urun-Foto-Uzanti" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

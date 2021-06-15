@@ -13,14 +13,6 @@
           <Property Name="favori-Urun_ıd" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="favori-Uye-Id" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Foto-Bilgisi">
-          <Key>
-            <PropertyRef Name="foto-Id" />
-          </Key>
-          <Property Name="foto-Id" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="foto" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="foto-Urun-Id" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Kategori-Bilgisi">
           <Key>
             <PropertyRef Name="kategori-Id" />
@@ -88,12 +80,21 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
           <Property Name="urun-Eklenme-Tarih" Type="datetime" Nullable="false" />
           <Property Name="urun-KDV" Type="int" Nullable="false" />
           <Property Name="urun-Satılan" Type="int" />
-          <Property Name="urun-İmage" Type="image" />
           <Property Name="urun-Admin-Bilgi" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="urun-Aciklama" Type="nvarchar(max)" />
-          <Property Name="urun-Foto" Type="nvarchar" MaxLength="50" />
-          <Property Name="urun-Foto-1" Type="nvarchar" MaxLength="50" />
+          <Property Name="urun-Tanitim" Type="nvarchar" MaxLength="50" />
+          <Property Name="urun-Foto-Bilgisi" Type="nvarchar" MaxLength="50" />
+          <Property Name="urun-Foto1" Type="nvarchar" MaxLength="50" />
           <Property Name="urun-Foto-2" Type="nvarchar" MaxLength="50" />
+          <Property Name="urun-foto-3" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="urun-Foto-Bilgisi">
+          <Key>
+            <PropertyRef Name="urun-Foto-Urun-Id" />
+          </Key>
+          <Property Name="urun-Foto-Urun-Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="urun-Foto-data" Type="nvarchar" MaxLength="50" />
+          <Property Name="urun-Foto-Uzanti" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Uye-Bilgi">
           <Key>
@@ -202,6 +203,18 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Urun-Bilgisi_urun-Foto-Bilgisi">
+          <End Role="urun-Foto-Bilgisi" Type="Self.urun-Foto-Bilgisi" Multiplicity="0..1" />
+          <End Role="Urun-Bilgisi" Type="Self.Urun-Bilgisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="urun-Foto-Bilgisi">
+              <PropertyRef Name="urun-Foto-Urun-Id" />
+            </Principal>
+            <Dependent Role="Urun-Bilgisi">
+              <PropertyRef Name="urun-Foto-Bilgisi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Urun-Bilgisi_Uye-Bilgi">
           <End Role="Uye-Bilgi" Type="Self.Uye-Bilgi" Multiplicity="1" />
           <End Role="Urun-Bilgisi" Type="Self.Urun-Bilgisi" Multiplicity="*" />
@@ -216,12 +229,12 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
         </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Favori-Bilgisi" EntityType="Self.Favori-Bilgisi" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Foto-Bilgisi" EntityType="Self.Foto-Bilgisi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kategori-Bilgisi" EntityType="Self.Kategori-Bilgisi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Marka-Bilgi" EntityType="Self.Marka-Bilgi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sepet-Bilgisi" EntityType="Self.Sepet-Bilgisi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Urun-Bilgisi" EntityType="Self.Urun-Bilgisi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="urun-Foto-Bilgisi" EntityType="Self.urun-Foto-Bilgisi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Uye-Bilgi" EntityType="Self.Uye-Bilgi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Satis-Bilgisi" EntityType="Self.Satis-Bilgisi" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -266,6 +279,10 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
             <End Role="Marka-Bilgi" EntitySet="Marka-Bilgi" />
             <End Role="Urun-Bilgisi" EntitySet="Urun-Bilgisi" />
           </AssociationSet>
+          <AssociationSet Name="FK_Urun-Bilgisi_urun-Foto-Bilgisi" Association="Self.FK_Urun-Bilgisi_urun-Foto-Bilgisi">
+            <End Role="urun-Foto-Bilgisi" EntitySet="urun-Foto-Bilgisi" />
+            <End Role="Urun-Bilgisi" EntitySet="Urun-Bilgisi" />
+          </AssociationSet>
           <AssociationSet Name="FK_Urun-Bilgisi_Uye-Bilgi" Association="Self.FK_Urun-Bilgisi_Uye-Bilgi">
             <End Role="Uye-Bilgi" EntitySet="Uye-Bilgi" />
             <End Role="Urun-Bilgisi" EntitySet="Urun-Bilgisi" />
@@ -285,14 +302,6 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
           <Property Name="favori_Uye_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Urun_Bilgisi" Relationship="Self.FK_Favori_Bilgisi_Urun_Bilgisi" FromRole="Favori_Bilgisi" ToRole="Urun_Bilgisi" />
           <NavigationProperty Name="Uye_Bilgi" Relationship="Self.FK_Favori_Bilgisi_Uye_Bilgi1" FromRole="Favori_Bilgisi" ToRole="Uye_Bilgi" />
-        </EntityType>
-        <EntityType Name="Foto_Bilgisi">
-          <Key>
-            <PropertyRef Name="foto_Id" />
-          </Key>
-          <Property Name="foto_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="foto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="foto_Urun_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Kategori_Bilgisi">
           <Key>
@@ -345,18 +354,29 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
           <Property Name="urun_Eklenme_Tarih" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="urun_KDV" Type="Int32" Nullable="false" />
           <Property Name="urun_Satılan" Type="Int32" />
-          <Property Name="urun_İmage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="urun_Admin_Bilgi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="urun_Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="urun_Foto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="urun_Foto_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="urun_Tanitim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="urun_Foto_Bilgisi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="urun_Foto1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="urun_Foto_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="urun_foto_3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Favori_Bilgisi" Relationship="Self.FK_Favori_Bilgisi_Urun_Bilgisi" FromRole="Urun_Bilgisi" ToRole="Favori_Bilgisi" />
           <NavigationProperty Name="Kategori_Bilgisi" Relationship="Self.FK_Urun_Bilgisi_Kategori_Bilgisi1" FromRole="Urun_Bilgisi" ToRole="Kategori_Bilgisi" />
           <NavigationProperty Name="Marka_Bilgi" Relationship="Self.FK_Urun_Bilgisi_Marka_Bilgi1" FromRole="Urun_Bilgisi" ToRole="Marka_Bilgi" />
           <NavigationProperty Name="Sepet_Bilgisi" Relationship="Self.FK_Sepet_Bilgisi_Urun_Bilgisi" FromRole="Urun_Bilgisi" ToRole="Sepet_Bilgisi" />
           <NavigationProperty Name="Satis_Bilgisi" Relationship="Self.FK_Satis_Bilgisi_Urun_Bilgisi" FromRole="Urun_Bilgisi" ToRole="Satis_Bilgisi" />
+          <NavigationProperty Name="urun_Foto_Bilgisi1" Relationship="Self.FK_Urun_Bilgisi_urun_Foto_Bilgisi" FromRole="Urun_Bilgisi" ToRole="urun_Foto_Bilgisi" />
           <NavigationProperty Name="Uye_Bilgi" Relationship="Self.FK_Urun_Bilgisi_Uye_Bilgi" FromRole="Urun_Bilgisi" ToRole="Uye_Bilgi" />
+        </EntityType>
+        <EntityType Name="urun_Foto_Bilgisi">
+          <Key>
+            <PropertyRef Name="urun_Foto_Urun_Id" />
+          </Key>
+          <Property Name="urun_Foto_Urun_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="urun_Foto_data" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="urun_Foto_Uzanti" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Urun_Bilgisi" Relationship="Self.FK_Urun_Bilgisi_urun_Foto_Bilgisi" FromRole="urun_Foto_Bilgisi" ToRole="Urun_Bilgisi" />
         </EntityType>
         <EntityType Name="Uye_Bilgi">
           <Key>
@@ -477,6 +497,18 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Urun_Bilgisi_urun_Foto_Bilgisi">
+          <End Role="urun_Foto_Bilgisi" Type="Self.urun_Foto_Bilgisi" Multiplicity="0..1" />
+          <End Role="Urun_Bilgisi" Type="Self.Urun_Bilgisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="urun_Foto_Bilgisi">
+              <PropertyRef Name="urun_Foto_Urun_Id" />
+            </Principal>
+            <Dependent Role="Urun_Bilgisi">
+              <PropertyRef Name="urun_Foto_Bilgisi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Urun_Bilgisi_Uye_Bilgi">
           <End Role="Uye_Bilgi" Type="Self.Uye_Bilgi" Multiplicity="1" />
           <End Role="Urun_Bilgisi" Type="Self.Urun_Bilgisi" Multiplicity="*" />
@@ -501,14 +533,14 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities4" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Favori_Bilgisi" EntityType="Self.Favori_Bilgisi" />
-          <EntitySet Name="Foto_Bilgisi" EntityType="Self.Foto_Bilgisi" />
           <EntitySet Name="Kategori_Bilgisi" EntityType="Self.Kategori_Bilgisi" />
           <EntitySet Name="Marka_Bilgi" EntityType="Self.Marka_Bilgi" />
           <EntitySet Name="Sepet_Bilgisi" EntityType="Self.Sepet_Bilgisi" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Urun_Bilgisi" EntityType="Self.Urun_Bilgisi" />
+          <EntitySet Name="urun_Foto_Bilgisi" EntityType="Self.urun_Foto_Bilgisi" />
           <EntitySet Name="Uye_Bilgi" EntityType="Self.Uye_Bilgi" />
           <EntitySet Name="Satis_Bilgisi" EntityType="Self.Satis_Bilgisi" />
           <AssociationSet Name="FK_Favori_Bilgisi_Urun_Bilgisi" Association="Self.FK_Favori_Bilgisi_Urun_Bilgisi">
@@ -539,6 +571,10 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
             <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
             <End Role="Satis_Bilgisi" EntitySet="Satis_Bilgisi" />
           </AssociationSet>
+          <AssociationSet Name="FK_Urun_Bilgisi_urun_Foto_Bilgisi" Association="Self.FK_Urun_Bilgisi_urun_Foto_Bilgisi">
+            <End Role="urun_Foto_Bilgisi" EntitySet="urun_Foto_Bilgisi" />
+            <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
+          </AssociationSet>
           <AssociationSet Name="FK_Urun_Bilgisi_Uye_Bilgi" Association="Self.FK_Urun_Bilgisi_Uye_Bilgi">
             <End Role="Uye_Bilgi" EntitySet="Uye_Bilgi" />
             <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
@@ -553,22 +589,13 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities2">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities4">
           <EntitySetMapping Name="Favori_Bilgisi">
             <EntityTypeMapping TypeName="Model.Favori_Bilgisi">
               <MappingFragment StoreEntitySet="Favori-Bilgisi">
                 <ScalarProperty Name="favori_Id" ColumnName="favori-Id" />
                 <ScalarProperty Name="favori_Urun_ıd" ColumnName="favori-Urun_ıd" />
                 <ScalarProperty Name="favori_Uye_Id" ColumnName="favori-Uye-Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Foto_Bilgisi">
-            <EntityTypeMapping TypeName="Model.Foto_Bilgisi">
-              <MappingFragment StoreEntitySet="Foto-Bilgisi">
-                <ScalarProperty Name="foto_Id" ColumnName="foto-Id" />
-                <ScalarProperty Name="foto" ColumnName="foto" />
-                <ScalarProperty Name="foto_Urun_Id" ColumnName="foto-Urun-Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -622,12 +649,22 @@ warning 6002: The table/view 'E-Ticaret.dbo.Satis-Bilgisi' does not have a prima
                 <ScalarProperty Name="urun_Eklenme_Tarih" ColumnName="urun-Eklenme-Tarih" />
                 <ScalarProperty Name="urun_KDV" ColumnName="urun-KDV" />
                 <ScalarProperty Name="urun_Satılan" ColumnName="urun-Satılan" />
-                <ScalarProperty Name="urun_İmage" ColumnName="urun-İmage" />
                 <ScalarProperty Name="urun_Admin_Bilgi" ColumnName="urun-Admin-Bilgi" />
                 <ScalarProperty Name="urun_Aciklama" ColumnName="urun-Aciklama" />
-                <ScalarProperty Name="urun_Foto" ColumnName="urun-Foto" />
-                <ScalarProperty Name="urun_Foto_1" ColumnName="urun-Foto-1" />
+                <ScalarProperty Name="urun_Tanitim" ColumnName="urun-Tanitim" />
+                <ScalarProperty Name="urun_Foto_Bilgisi" ColumnName="urun-Foto-Bilgisi" />
+                <ScalarProperty Name="urun_Foto1" ColumnName="urun-Foto1" />
                 <ScalarProperty Name="urun_Foto_2" ColumnName="urun-Foto-2" />
+                <ScalarProperty Name="urun_foto_3" ColumnName="urun-foto-3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="urun_Foto_Bilgisi">
+            <EntityTypeMapping TypeName="Model.urun_Foto_Bilgisi">
+              <MappingFragment StoreEntitySet="urun-Foto-Bilgisi">
+                <ScalarProperty Name="urun_Foto_Urun_Id" ColumnName="urun-Foto-Urun-Id" />
+                <ScalarProperty Name="urun_Foto_data" ColumnName="urun-Foto-data" />
+                <ScalarProperty Name="urun_Foto_Uzanti" ColumnName="urun-Foto-Uzanti" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

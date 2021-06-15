@@ -7,20 +7,18 @@ using System.Web;
 using e_Ticaret.Models;
 using System.Web.Http;
 using e_Ticaret.viewModel;
-
-
+using System.IO;
+using System.Drawing;
 
 namespace e_Ticaret.Controllers
 {
-    
-    
-    public class servisController: ApiController
+    public class servisController : ApiController
     {
-        Entities2 db = new Entities2();
+        Entities4 db = new Entities4();
         sonucModel sonuc = new sonucModel();
 
         #region Uye
-
+        //Üye Ekleme
         [HttpPost]
         [Route("api/uyeekle")]
         public sonucModel UyeEkle(uyeBilgisiModel model)
@@ -44,9 +42,10 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "Yeni Üye Eklendi";
             return sonuc;
         }
-
+        //Üye Listeleme
         [HttpGet]
         [Route("api/uyelistele")]
+        [Authorize(Roles ="Admin")]
         public List<uyeBilgisiModel> UyeListele()
         {
             List<uyeBilgisiModel> liste = db.Uye_Bilgi.Select(x => new uyeBilgisiModel()
@@ -60,7 +59,7 @@ namespace e_Ticaret.Controllers
             }).ToList();
             return liste;
         }
-
+        //Üye Id İle Listeleme
         [HttpGet]
         [Route("api/uyebyid/{uyeId}")]
         public uyeBilgisiModel UyeById(string uyeId)
@@ -76,10 +75,9 @@ namespace e_Ticaret.Controllers
             }).SingleOrDefault();
             return kayit;
         }
-
-
+        //Üye Düzenleme
         [HttpPut]
-        [Route("api/uyeduzenle/{uye_ıd}")]
+        [Route("api/uyeduzenle")]
         public sonucModel UyeDuzenle(uyeBilgisiModel model)
         {
             Uye_Bilgi uyebul = db.Uye_Bilgi.Where(s => s.uye_Id == model.uye_Id).SingleOrDefault();
@@ -99,7 +97,7 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "Üye Güncellendi";
             return sonuc;
         }
-
+        //Üye Silme
         [HttpDelete]
         [Route("api/uyesil/{uye_Id}")]
         public sonucModel UyeSil(string uye_Id)
@@ -118,80 +116,47 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "üye silindi";
             return sonuc;
         }
-
-        [HttpPut]
-        [Route("api/sifreyenile/{uyeıd}")]
-        public sonucModel SirfeYenile(uyeBilgisiModel model)
-        {
-            Uye_Bilgi uyebul = db.Uye_Bilgi.Where(s => s.uye_Id == model.uye_Id).SingleOrDefault();
-            if (uyebul == null)
-            {
-                sonuc.islem = false;
-                sonuc.mesaj = "uye bulunamadı";
-                return sonuc;
-            }
-            uyebul.uye_Sifre = model.uye_Sifre;
-
-            db.SaveChanges();
-            sonuc.islem = true;
-            sonuc.mesaj = "Şifre Yenilendi";
-            return sonuc;
-        }
-
-        [HttpPut]
-        [Route("api/adresduzenle/{uyeıd}")]
-        public sonucModel AdresDuzenle(uyeBilgisiModel model)
-        {
-            Uye_Bilgi uyebul = db.Uye_Bilgi.Where(s => s.uye_Id == model.uye_Id).SingleOrDefault();
-            if (uyebul==null)
-            {
-                sonuc.islem = false;
-                sonuc.mesaj = "Üye bulunamadığı için adres düzenlenemedi";
-                return sonuc;
-            }
-            uyebul.uye_Adres_Bilgisi = model.uye_Adres_Bilgisi;
-            db.SaveChanges();
-            sonuc.islem = true;
-            sonuc.mesaj = "üye adres bilgisi güncellendi";
-            return sonuc;
-        }
-
         #endregion
-
         #region Urun
+
+        //Ürün Ekleme
         [HttpPost]
         [Route("api/urunekle")]
         public sonucModel UrunEkle(urunBilgisiModel model)
         {
-            Urun_Bilgisi yeniUye = new Urun_Bilgisi();
-            yeniUye.urun_Id = Guid.NewGuid().ToString();
-            yeniUye.urun_Adi = model.urun_Adi;
-            yeniUye.urun_Gelis_Fiyat = model.urun_Gelis_Fiyat;
-            yeniUye.urun_Satis_Fiyat = model.urun_Satis_Fiyat;
-            yeniUye.urun_KDV = model.urun_KDV;
-            yeniUye.urun_Satılan = model.urun_Satılan;
-            yeniUye.urun_Stok = model.urun_Stok;
-            yeniUye.urun_İmage = model.urun_İmage;
-            yeniUye.urun_Marka_Id = model.urun_Marka_Id;
-            yeniUye.urun_Kategori_Id = model.urun_Kategori_Id;
-            yeniUye.urun_Admin_Bilgi = model.urun_Admin_Bilgi;
-            yeniUye.urun_Eklenme_Tarih = model.urun_Eklenme_Tarih.AddHours(3);
-            yeniUye.urun_Foto = model.urun_Foto;
-            yeniUye.urun_Foto_1 = model.urun_Foto_1;
-            yeniUye.urun_Foto_2 = model.urun_Foto_2;
-            yeniUye.urun_Aciklama = model.urun_Aciklama;
+            Urun_Bilgisi yeniurun = new Urun_Bilgisi();
+            yeniurun.urun_Id = Guid.NewGuid().ToString();
+            yeniurun.urun_Adi = model.urun_Adi;
+            yeniurun.urun_Gelis_Fiyat = model.urun_Gelis_Fiyat;
+            yeniurun.urun_Satis_Fiyat = model.urun_Satis_Fiyat;
+            yeniurun.urun_KDV = model.urun_KDV;
+            yeniurun.urun_Satılan = model.urun_Satılan;
+            yeniurun.urun_Stok = model.urun_Stok;
+
+            yeniurun.urun_Marka_Id = model.urun_Marka_Id;
+            yeniurun.urun_Kategori_Id = model.urun_Kategori_Id;
+            yeniurun.urun_Admin_Bilgi = model.urun_Admin_Bilgi;
+            yeniurun.urun_Eklenme_Tarih = model.urun_Eklenme_Tarih.AddHours(3);
+            yeniurun.urun_Tanitim = model.urun_Tanitim;
+            yeniurun.urun_Foto_Bilgisi = model.urun_Foto_Bilgisi;
+            yeniurun.urun_Aciklama = model.urun_Aciklama;
+            yeniurun.urun_Foto1 = model.urun_Foto1;
+            yeniurun.urun_Foto_2 = model.urun_Foto_2;
+            yeniurun.urun_foto_3 = model.urun_foto_3;
 
 
-            db.Urun_Bilgisi.Add(yeniUye);
+
+            db.Urun_Bilgisi.Add(yeniurun);
             db.SaveChanges();
             sonuc.islem = true;
-            sonuc.mesaj = "Yeni ürün Eklendi";
+            sonuc.mesaj = yeniurun.urun_Id;
             return sonuc;
         }
 
-
+        //Ürün Silme
         [HttpDelete]
         [Route("api/urunsil/{urun_Id}")]
+        [Authorize(Roles ="Admin")]
         public sonucModel UrunSil(string urun_Id)
         {
            
@@ -202,6 +167,12 @@ namespace e_Ticaret.Controllers
                 sonuc.mesaj = "ürün bulunamadığı için silinemedi";
                 return sonuc;
             }
+            if (db.Sepet_Bilgisi.Count(s => s.sepet_Urun_Id == urun_Id) > 0)
+            {
+                sonuc.islem = false;
+                sonuc.mesaj = "Bu Ürün Bir Sepete Ekli Önce Sepetten Sil...";
+                return sonuc;
+            }
             db.Urun_Bilgisi.Remove(urunsil);
             db.SaveChanges();
             sonuc.islem = true;
@@ -209,8 +180,10 @@ namespace e_Ticaret.Controllers
             return sonuc;
         }
 
+        //Ürün Düzenleme
         [HttpPut]
         [Route("api/urunduzenle/{urun_Id}")]
+        [Authorize(Roles = "Admin")]
         public sonucModel UrunDuzenle(urunBilgisiModel model)
         {
             Urun_Bilgisi urunbul = db.Urun_Bilgisi.Where(s => s.urun_Id == model.urun_Id).SingleOrDefault();
@@ -229,16 +202,21 @@ namespace e_Ticaret.Controllers
             urunbul.urun_Stok = model.urun_Stok;
             urunbul.urun_Gelis_Fiyat = model.urun_Gelis_Fiyat;
             urunbul.urun_Eklenme_Tarih = model.urun_Eklenme_Tarih;
-            urunbul.urun_İmage = model.urun_İmage;
+            urunbul.urun_Foto1 = model.urun_Foto1;
+            urunbul.urun_Foto_2 = model.urun_Foto_2;
+            urunbul.urun_foto_3 = model.urun_foto_3;
+
+
             db.SaveChanges();
             sonuc.islem = true;
             sonuc.mesaj = "Ürün Güncellendi";
             return sonuc;
         }
 
+        //Ürünü ID ile Listeleme ve Bağlı Tabloları Getirme
         [HttpGet]
-        [Route("api/urunlistele/{urunıd}")]
-        public List<urunBilgisiModel> urunListele(string urunıd)
+        [Route("api/urundetaybyid/{urunıd}")]
+        public List<urunBilgisiModel> UrunDetayById(string urunıd)
         {
             List<urunBilgisiModel> liste = db.Urun_Bilgisi.Where(s => s.urun_Id == urunıd).Select(x => new urunBilgisiModel()
             {
@@ -250,15 +228,18 @@ namespace e_Ticaret.Controllers
                 urun_Admin_Bilgi = x.urun_Admin_Bilgi,
                 urun_Satis_Fiyat = x.urun_Satis_Fiyat,
                 urun_Eklenme_Tarih = x.urun_Eklenme_Tarih,
+                urun_Aciklama=x.urun_Aciklama,
                 urun_KDV = x.urun_KDV,
                 urun_Stok = x.urun_Stok,
-                urun_İmage = x.urun_İmage
+                urun_Foto1=x.urun_Foto1,
+                urun_Foto_2=x.urun_Foto_2,
+                urun_foto_3 = x.urun_foto_3
+              
             }).ToList();
             foreach (var kayit in liste)
             {
                 kayit.markabilgi = MarkaById(kayit.urun_Marka_Id);
                 kayit.kategoribilgi = KategoriById(kayit.urun_Kategori_Id);
-                kayit.adminbilgisi = UyeById(kayit.urun_Id);
 
 
             }
@@ -266,6 +247,34 @@ namespace e_Ticaret.Controllers
             return liste;
         }
 
+        //Ürün Kategori Id Si İle Listeleme ve Bağlı Tabloları Getirme
+        [HttpGet]
+        [Route("api/urunkatlistebyıd/{katıd}")]
+        public List<urunBilgisiModel> UrunKatListeBy(string katıd)
+        {
+            List<urunBilgisiModel> kayit = db.Urun_Bilgisi.Where(s => s.urun_Kategori_Id == katıd).Select(x => new urunBilgisiModel()
+            {
+                urun_Id = x.urun_Id,
+                urun_Adi = x.urun_Adi,
+                urun_Kategori_Id = x.urun_Kategori_Id,
+                urun_Marka_Id = x.urun_Marka_Id,
+                urun_Satılan = x.urun_Satılan,
+                urun_Admin_Bilgi = x.urun_Admin_Bilgi,
+                urun_Satis_Fiyat = x.urun_Satis_Fiyat,
+                urun_Eklenme_Tarih = x.urun_Eklenme_Tarih,
+                urun_Aciklama = x.urun_Aciklama,
+                urun_KDV = x.urun_KDV,
+                urun_Stok = x.urun_Stok,
+                urun_Foto1 = x.urun_Foto1,
+                urun_Foto_2 = x.urun_Foto_2,
+                urun_foto_3 = x.urun_foto_3,
+                urun_Foto_Bilgisi = x.urun_Foto_Bilgisi
+            }).ToList();
+
+            return kayit;
+        }
+
+        //Ürün Tamamını Listeleme
         [HttpGet]
         [Route("api/urunliste")]
         public List<urunBilgisiModel> UrunListeleNormal()
@@ -280,13 +289,18 @@ namespace e_Ticaret.Controllers
                 urun_Admin_Bilgi = x.urun_Admin_Bilgi,
                 urun_Satis_Fiyat = x.urun_Satis_Fiyat,
                 urun_Eklenme_Tarih = x.urun_Eklenme_Tarih,
+                urun_Aciklama = x.urun_Aciklama,
                 urun_KDV = x.urun_KDV,
                 urun_Stok = x.urun_Stok,
-                urun_İmage = x.urun_İmage
+                urun_Foto1 = x.urun_Foto1,
+                urun_Foto_2 = x.urun_Foto_2,
+                urun_foto_3 = x.urun_foto_3,
+              urun_Foto_Bilgisi =x.urun_Foto_Bilgisi
             }).ToList();
             return liste;
         }
 
+        //Ürün Id İle Listeleme
         [HttpGet]
         [Route("api/urunbyıd/{urunId}")]
         public urunBilgisiModel UrunById(string urunId)
@@ -301,21 +315,70 @@ namespace e_Ticaret.Controllers
                 urun_Admin_Bilgi = x.urun_Admin_Bilgi,
                 urun_Satis_Fiyat = x.urun_Satis_Fiyat,
                 urun_Eklenme_Tarih = x.urun_Eklenme_Tarih,
+                urun_Aciklama = x.urun_Aciklama,
                 urun_KDV = x.urun_KDV,
                 urun_Stok = x.urun_Stok,
-                urun_İmage = x.urun_İmage
+                urun_Foto_Bilgisi=x.urun_Foto_Bilgisi,
+                urun_Foto1 = x.urun_Foto1,
+                urun_Foto_2 = x.urun_Foto_2,
+                urun_foto_3 = x.urun_foto_3
             }).SingleOrDefault();
             return urunbul;
         }
         #endregion
+        #region foto
+        //Ürün Fotoğraf Ekleme
+        [HttpPost]
+        [Route("api/urunfotoguncelle")]
+        [Authorize(Roles = "Admin")]
+        public sonucModel UrunFotoGuncelle(urunFotoBilgisi model)
+        {
+            Urun_Bilgisi foto = db.Urun_Bilgisi.Where(s => s.urun_Id == model.urun_Foto_Urun_Id).SingleOrDefault();
 
+
+            if (foto == null)
+            {
+                sonuc.islem = false;
+                sonuc.mesaj = "Kayıt Bulunamadı!";
+                return sonuc;
+            }
+
+            if (foto.urun_Foto1 != "urun.jpg")
+            {
+                string yol = System.Web.Hosting.HostingEnvironment.MapPath("~/Dosyalar/" + foto.urun_Foto1);
+                if (File.Exists(yol))
+                {
+                    File.Delete(yol);
+                }
+            }
+
+            string data = model.urun_Foto_data;
+            string base64 = data.Substring(data.IndexOf(',') + 1);
+            base64 = base64.Trim('\0');
+            byte[] imgbytes = Convert.FromBase64String(base64);
+            string dosyaAdi = foto.urun_Id + model.urun_Foto_Uzanti.Replace("image/", ".");
+            using (var ms = new MemoryStream(imgbytes, 0, imgbytes.Length))
+            {
+                Image img = Image.FromStream(ms, true);
+                img.Save(System.Web.Hosting.HostingEnvironment.MapPath("~/Dosyalar/" + dosyaAdi));
+
+            }
+            foto.urun_Foto1 = dosyaAdi;
+            db.SaveChanges();
+
+            sonuc.islem = true;
+            sonuc.mesaj = "Fotoğraf Güncellendi";
+
+
+            return sonuc;
+        }
+        #endregion
         #region sepet
-
+        //Sepet Ekleme
         [HttpPost]
         [Route("api/sepetekle")]
         public sonucModel SepetEkle(sepetBilgisiModel model)
         {
-
             Sepet_Bilgisi yenisepet = new Sepet_Bilgisi();
             yenisepet.sepet_Id = Guid.NewGuid().ToString();
             yenisepet.sepet_Urun_Fiyat = model.sepet_Urun_Fiyat;
@@ -328,8 +391,7 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "sepet Başarıyla Eklendi";
             return sonuc;
         }
-
-
+        //Sepet Tamamını Listeleme
         [HttpGet]
         [Route("api/sepetlistele")]
         public List<sepetBilgisiModel> SepetListe()
@@ -344,8 +406,7 @@ namespace e_Ticaret.Controllers
             }).ToList();
             return liste;
         }
-
-
+        //Sepet Sepet Id si İle Bağlı Tabloları Listeleme Listeleme
         [HttpGet]
         [Route("api/sepetliste/{sepetid}")]
         public List<sepetBilgisiModel> SepetListe(string sepetid)
@@ -367,24 +428,7 @@ namespace e_Ticaret.Controllers
             }
             return liste;
         }
-
-
-        [HttpGet]
-        [Route("api/sepetbyıd/{sepetıd}")]
-        public sepetBilgisiModel SepetById(string sepetıd)
-        {
-            sepetBilgisiModel kayit = db.Sepet_Bilgisi.Where(s => s.sepet_Id == sepetıd).Select(x => new sepetBilgisiModel()
-            {
-                sepet_Id = x.sepet_Id,
-                sepet_Urun_Fiyat = x.sepet_Urun_Fiyat,
-                sepet_Urun_Id = x.sepet_Urun_Id,
-                sepet_Uye_Id = x.sepet_Uye_Id
-            }).SingleOrDefault();
-            return kayit;
-        }
-
-
-
+        //Sepet Silme
         [HttpDelete]
         [Route("api/sepetsil/{sepetıd}")]
         public sonucModel SepetSil(string sepetıd)
@@ -403,11 +447,53 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "sepet silindi";
             return sonuc;
         }
-        #endregion
+        //Sepeti Ürün Id İle silme
+        [HttpDelete]
+        [Route("api/sepetsilurunıd/{urunıd}")]
+        public sonucModel SepetSilUrunId(string urunıd)
+        {
 
+            Sepet_Bilgisi sepetsil = db.Sepet_Bilgisi.Where(s => s.sepet_Urun_Id == urunıd).SingleOrDefault();
+            if (sepetsil == null)
+            {
+                sonuc.islem = false;
+                sonuc.mesaj = "sepet bulunamadığı için silinemedi";
+                return sonuc;
+            }
+            db.Sepet_Bilgisi.Remove(sepetsil);
+            db.SaveChanges();
+            sonuc.islem = true;
+            sonuc.mesaj = "sepet silindi";
+            return sonuc;
+        }
+        //Sepet Üyeye Göre Listeleme
+        [HttpGet]
+        [Route("api/sepetuyebyid/{uyeid}")]
+        public List<sepetBilgisiModel> SepetUyeById(string uyeid)
+        {
+            List<sepetBilgisiModel> liste = db.Sepet_Bilgisi.Where(s => s.sepet_Uye_Id == uyeid).Select(x => new sepetBilgisiModel()
+            {
+                sepet_Id = x.sepet_Id,
+                sepet_Urun_Fiyat = x.sepet_Urun_Fiyat,
+                sepet_Urun_Id = x.sepet_Urun_Id,
+                sepet_Uye_Id = x.sepet_Uye_Id
+
+            }).ToList();
+            foreach (var kayit in liste)
+            {
+                kayit.uyebilgi = UyeById(kayit.sepet_Uye_Id);
+                kayit.urunbilgi = UrunById(kayit.sepet_Urun_Id);
+
+
+            }
+            return liste;
+        }
+
+            #endregion
         #region kategori ve marka
-
+        //Kategori Ekle
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("api/kategoriekle")]
         public sonucModel KategoriEkle(kategoriBilgisiModel model)
         {
@@ -427,9 +513,10 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "Yeni kategori Eklendi";
             return sonuc;
         }
-
+        //Kategori Düzenle
         [HttpPut]
         [Route("api/kategoriduzenle")]
+        [Authorize(Roles = "Admin")]
         public sonucModel KategoriDuzenle(kategoriBilgisiModel model)
         {
             Kategori_Bilgisi düzkat = db.Kategori_Bilgisi.Where(s => s.kategori_Id == model.kategori_Id).SingleOrDefault();
@@ -445,7 +532,8 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "Kategori Güncellendi!";
             return sonuc;
         }
-
+        //Kategori Listele
+        
         [HttpGet]
         [Route("api/kategorilistele")]
         public List<kategoriBilgisiModel> KategoriListele()
@@ -457,7 +545,7 @@ namespace e_Ticaret.Controllers
             }).ToList();
             return liste;
         }
-
+        //Kategori Id İle Listele
         [HttpGet]
         [Route("api/kategoribyid/{katid}")]
         public kategoriBilgisiModel KategoriById(string katid)
@@ -470,9 +558,10 @@ namespace e_Ticaret.Controllers
             }).SingleOrDefault();
             return kayit;
         }
-       
+       //Kategori Silme
         [HttpDelete]
         [Route("api/kategorisil/{katid}")]
+        [Authorize(Roles = "Admin")]
         public sonucModel KategoriSil(string katid)
         {
 
@@ -496,8 +585,11 @@ namespace e_Ticaret.Controllers
             return sonuc;
         }
 
+
+        //Marka Ekle
         [HttpPost]
         [Route("api/markaekle")]
+        [Authorize(Roles = "Admin")]
         public sonucModel MarkaEkle(markaBilgisiModel model)
         {
             if (db.Marka_Bilgi.Count(s => s.marka_Id == model.marka_Id) > 0)
@@ -516,7 +608,7 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "Yeni marka Eklendi";
             return sonuc;
         }
-
+        //Marka Listele
         [HttpGet]
         [Route("api/markalistele")]
         public List<markaBilgisiModel> MarkaListele()
@@ -528,7 +620,7 @@ namespace e_Ticaret.Controllers
             }).ToList();
             return liste;
         }
-
+        //Marka Id İle Listeleme
         [HttpGet]
         [Route("api/markabyid/{markaid}")]
         public markaBilgisiModel MarkaById(string markaid)
@@ -541,9 +633,10 @@ namespace e_Ticaret.Controllers
             }).SingleOrDefault();
             return kayit;
         }
-
+        //Marka Düzenleme
         [HttpPut]
         [Route("api/markaduzenle")]
+        [Authorize(Roles = "Admin")]
         public sonucModel MakraDuzenle(markaBilgisiModel model)
         {
             Marka_Bilgi yenimarka = db.Marka_Bilgi.Where(s => s.marka_Id == model.marka_Id).SingleOrDefault();
@@ -560,12 +653,12 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "Marka Düzenlendi!";
             return sonuc;
         }
-
+        //Marka Silme
         [HttpDelete]
         [Route("api/markasil/{markaid}")]
+        [Authorize(Roles = "Admin")]
         public sonucModel MarkaSil(string markaid)
         {
-
             Marka_Bilgi markasil = db.Marka_Bilgi.Where(s => s.marka_Id == markaid).SingleOrDefault();
             if (markasil == null)
             {
@@ -586,8 +679,8 @@ namespace e_Ticaret.Controllers
             return sonuc;
         }
         #endregion
-
         #region favori
+        //Favori Ekleme
         [HttpPost]
         [Route("api/favoriekle")]
         public sonucModel FavoriEkle(favoriBilgisiModel model)
@@ -603,7 +696,7 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "Yeni favori Eklendi";
             return sonuc;
         }
-
+        //Favori Listeleme
         [HttpGet]
         [Route("api/favoriliste")]
         public List<favoriBilgisiModel> FavoriListeNormal()
@@ -617,7 +710,7 @@ namespace e_Ticaret.Controllers
             }).ToList();
             return liste;
         }
-
+        //Favori Listeleme Id ile ve Bağlı Tabloları Getirme
         [HttpGet]
         [Route("api/favoriliste/{favid}")]
         public List<favoriBilgisiModel> FavoriListe(string favid)
@@ -636,7 +729,7 @@ namespace e_Ticaret.Controllers
 
             return liste;
         }
-
+        //Favori Listeleme Id İle
         [HttpGet]
         [Route("api/favoribyıd/{fav_ıd}")]
         public favoriBilgisiModel FavoriById(string fav_ıd)
@@ -649,7 +742,7 @@ namespace e_Ticaret.Controllers
             }).SingleOrDefault();
             return fav;
         }
-
+        //Favori Silme
         [HttpDelete]
         [Route("api/favorisil/{fav_ıd}")]
         public sonucModel FavoriSil(string fav_ıd)
@@ -667,7 +760,6 @@ namespace e_Ticaret.Controllers
             sonuc.mesaj = "Favori silindi";
             return sonuc;
         }
-
         #endregion
     }
 }

@@ -10,14 +10,6 @@
     <NavigationProperty Name="Urun_Bilgisi" Relationship="Self.FK_Favori_Bilgisi_Urun_Bilgisi" FromRole="Favori_Bilgisi" ToRole="Urun_Bilgisi" />
     <NavigationProperty Name="Uye_Bilgi" Relationship="Self.FK_Favori_Bilgisi_Uye_Bilgi1" FromRole="Favori_Bilgisi" ToRole="Uye_Bilgi" />
   </EntityType>
-  <EntityType Name="Foto_Bilgisi">
-    <Key>
-      <PropertyRef Name="foto_Id" />
-    </Key>
-    <Property Name="foto_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="foto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="foto_Urun_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-  </EntityType>
   <EntityType Name="Kategori_Bilgisi">
     <Key>
       <PropertyRef Name="kategori_Id" />
@@ -69,18 +61,29 @@
     <Property Name="urun_Eklenme_Tarih" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="urun_KDV" Type="Int32" Nullable="false" />
     <Property Name="urun_Satılan" Type="Int32" />
-    <Property Name="urun_İmage" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="urun_Admin_Bilgi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="urun_Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="urun_Foto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="urun_Foto_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="urun_Tanitim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="urun_Foto_Bilgisi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="urun_Foto1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="urun_Foto_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="urun_foto_3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Favori_Bilgisi" Relationship="Self.FK_Favori_Bilgisi_Urun_Bilgisi" FromRole="Urun_Bilgisi" ToRole="Favori_Bilgisi" />
     <NavigationProperty Name="Kategori_Bilgisi" Relationship="Self.FK_Urun_Bilgisi_Kategori_Bilgisi1" FromRole="Urun_Bilgisi" ToRole="Kategori_Bilgisi" />
     <NavigationProperty Name="Marka_Bilgi" Relationship="Self.FK_Urun_Bilgisi_Marka_Bilgi1" FromRole="Urun_Bilgisi" ToRole="Marka_Bilgi" />
     <NavigationProperty Name="Sepet_Bilgisi" Relationship="Self.FK_Sepet_Bilgisi_Urun_Bilgisi" FromRole="Urun_Bilgisi" ToRole="Sepet_Bilgisi" />
     <NavigationProperty Name="Satis_Bilgisi" Relationship="Self.FK_Satis_Bilgisi_Urun_Bilgisi" FromRole="Urun_Bilgisi" ToRole="Satis_Bilgisi" />
+    <NavigationProperty Name="urun_Foto_Bilgisi1" Relationship="Self.FK_Urun_Bilgisi_urun_Foto_Bilgisi" FromRole="Urun_Bilgisi" ToRole="urun_Foto_Bilgisi" />
     <NavigationProperty Name="Uye_Bilgi" Relationship="Self.FK_Urun_Bilgisi_Uye_Bilgi" FromRole="Urun_Bilgisi" ToRole="Uye_Bilgi" />
+  </EntityType>
+  <EntityType Name="urun_Foto_Bilgisi">
+    <Key>
+      <PropertyRef Name="urun_Foto_Urun_Id" />
+    </Key>
+    <Property Name="urun_Foto_Urun_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="urun_Foto_data" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="urun_Foto_Uzanti" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Urun_Bilgisi" Relationship="Self.FK_Urun_Bilgisi_urun_Foto_Bilgisi" FromRole="urun_Foto_Bilgisi" ToRole="Urun_Bilgisi" />
   </EntityType>
   <EntityType Name="Uye_Bilgi">
     <Key>
@@ -201,6 +204,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Urun_Bilgisi_urun_Foto_Bilgisi">
+    <End Role="urun_Foto_Bilgisi" Type="Self.urun_Foto_Bilgisi" Multiplicity="0..1" />
+    <End Role="Urun_Bilgisi" Type="Self.Urun_Bilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="urun_Foto_Bilgisi">
+        <PropertyRef Name="urun_Foto_Urun_Id" />
+      </Principal>
+      <Dependent Role="Urun_Bilgisi">
+        <PropertyRef Name="urun_Foto_Bilgisi" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Urun_Bilgisi_Uye_Bilgi">
     <End Role="Uye_Bilgi" Type="Self.Uye_Bilgi" Multiplicity="1" />
     <End Role="Urun_Bilgisi" Type="Self.Urun_Bilgisi" Multiplicity="*" />
@@ -225,14 +240,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="Entities2" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="Entities4" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Favori_Bilgisi" EntityType="Self.Favori_Bilgisi" />
-    <EntitySet Name="Foto_Bilgisi" EntityType="Self.Foto_Bilgisi" />
     <EntitySet Name="Kategori_Bilgisi" EntityType="Self.Kategori_Bilgisi" />
     <EntitySet Name="Marka_Bilgi" EntityType="Self.Marka_Bilgi" />
     <EntitySet Name="Sepet_Bilgisi" EntityType="Self.Sepet_Bilgisi" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="Urun_Bilgisi" EntityType="Self.Urun_Bilgisi" />
+    <EntitySet Name="urun_Foto_Bilgisi" EntityType="Self.urun_Foto_Bilgisi" />
     <EntitySet Name="Uye_Bilgi" EntityType="Self.Uye_Bilgi" />
     <EntitySet Name="Satis_Bilgisi" EntityType="Self.Satis_Bilgisi" />
     <AssociationSet Name="FK_Favori_Bilgisi_Urun_Bilgisi" Association="Self.FK_Favori_Bilgisi_Urun_Bilgisi">
@@ -262,6 +277,10 @@
     <AssociationSet Name="FK_Satis_Bilgisi_Urun_Bilgisi" Association="Self.FK_Satis_Bilgisi_Urun_Bilgisi">
       <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
       <End Role="Satis_Bilgisi" EntitySet="Satis_Bilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Urun_Bilgisi_urun_Foto_Bilgisi" Association="Self.FK_Urun_Bilgisi_urun_Foto_Bilgisi">
+      <End Role="urun_Foto_Bilgisi" EntitySet="urun_Foto_Bilgisi" />
+      <End Role="Urun_Bilgisi" EntitySet="Urun_Bilgisi" />
     </AssociationSet>
     <AssociationSet Name="FK_Urun_Bilgisi_Uye_Bilgi" Association="Self.FK_Urun_Bilgisi_Uye_Bilgi">
       <End Role="Uye_Bilgi" EntitySet="Uye_Bilgi" />

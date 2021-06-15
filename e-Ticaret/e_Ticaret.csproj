@@ -200,9 +200,6 @@
     <Compile Include="Models\Favori_Bilgisi.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Foto_Bilgisi.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Kategori_Bilgisi.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -236,6 +233,9 @@
     <Compile Include="Models\Urun_Bilgisi.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\urun_Foto_Bilgisi.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Uye_Bilgi.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -248,6 +248,7 @@
     <Compile Include="viewModel\sepetBilgisiModel.cs" />
     <Compile Include="viewModel\sonucModel.cs" />
     <Compile Include="viewModel\urunBilgisiModel.cs" />
+    <Compile Include="viewModel\urunFotoBilgisi.cs" />
     <Compile Include="viewModel\uyeBilgisiModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Dosyalar\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

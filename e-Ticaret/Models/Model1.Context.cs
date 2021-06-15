@@ -13,10 +13,10 @@ namespace e_Ticaret.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities2 : DbContext
+    public partial class Entities4 : DbContext
     {
-        public Entities2()
-            : base("name=Entities2")
+        public Entities4()
+            : base("name=Entities4")
         {
         }
     
@@ -26,12 +26,12 @@ namespace e_Ticaret.Models
         }
     
         public virtual DbSet<Favori_Bilgisi> Favori_Bilgisi { get; set; }
-        public virtual DbSet<Foto_Bilgisi> Foto_Bilgisi { get; set; }
         public virtual DbSet<Kategori_Bilgisi> Kategori_Bilgisi { get; set; }
         public virtual DbSet<Marka_Bilgi> Marka_Bilgi { get; set; }
         public virtual DbSet<Sepet_Bilgisi> Sepet_Bilgisi { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Urun_Bilgisi> Urun_Bilgisi { get; set; }
+        public virtual DbSet<urun_Foto_Bilgisi> urun_Foto_Bilgisi { get; set; }
         public virtual DbSet<Uye_Bilgi> Uye_Bilgi { get; set; }
         public virtual DbSet<Satis_Bilgisi> Satis_Bilgisi { get; set; }
     }

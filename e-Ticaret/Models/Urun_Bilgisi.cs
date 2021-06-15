@@ -32,12 +32,13 @@ namespace e_Ticaret.Models
         public System.DateTime urun_Eklenme_Tarih { get; set; }
         public int urun_KDV { get; set; }
         public Nullable<int> urun_Satılan { get; set; }
-        public byte[] urun_İmage { get; set; }
         public string urun_Admin_Bilgi { get; set; }
         public string urun_Aciklama { get; set; }
-        public string urun_Foto { get; set; }
-        public string urun_Foto_1 { get; set; }
+        public string urun_Tanitim { get; set; }
+        public string urun_Foto_Bilgisi { get; set; }
+        public string urun_Foto1 { get; set; }
         public string urun_Foto_2 { get; set; }
+        public string urun_foto_3 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Favori_Bilgisi> Favori_Bilgisi { get; set; }
@@ -47,6 +48,7 @@ namespace e_Ticaret.Models
         public virtual ICollection<Sepet_Bilgisi> Sepet_Bilgisi { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Satis_Bilgisi> Satis_Bilgisi { get; set; }
+        public virtual urun_Foto_Bilgisi urun_Foto_Bilgisi1 { get; set; }
         public virtual Uye_Bilgi Uye_Bilgi { get; set; }
     }
 }

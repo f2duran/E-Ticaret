@@ -9,7 +9,7 @@ namespace e_Ticaret.Auth
 {
     public class uyeService
     {
-        Entities2 db = new Entities2();
+        Entities4 db = new Entities4();
         public uyeBilgisiModel UyeOturumAc(string kadi, string parola)
         {
             uyeBilgisiModel uye = db.Uye_Bilgi.Where(s => s.uye_E_Mail == kadi && s.uye_Sifre == parola).Select(x => new uyeBilgisiModel()
